@@ -5,7 +5,13 @@ function Urlap(){
     setNev(event.target.value);
   }
 
-  const [user, setUser] = useState({ regNev: '', lakhely: '' })
+  const [user, setUser] = useState(
+    { regNev: '', 
+      lakhely: '', 
+      nyelv: {en: '', ge: ''},  
+      nem: '', 
+      bio: '' 
+    });
   const userNevMod = (e) => {
     setUser({ ...user, regNev: e.target.value })
   }
@@ -37,12 +43,40 @@ function Urlap(){
             <option value="Pécs">Pécs</option>
           </select>
         
+          <p>Nyelvtudás</p>
+          <label htmlFor="en">Angol</label>
+          <input type="checkbox" id="en" checked={ user.nyelv.en } onChange={ (e) => {
+            setUser({ ...user, nyelv: { ...user.nyelv, en: e.target.checked ? 'angol' : ''} })
+          }}/>
+          <label htmlFor="ge">Német</label>
+          <input type="checkbox" id="ge" checked={ user.nyelv.ge} onChange={ (e) => {
+            setUser({ ...user, nyelv: { ...user.nyelv, ge: e.target.checked ? 'német' : '' }})
+          }} />
+
+          <p>Nem</p>
+          <label htmlFor="ffi">Férfi</label>
+          <input type="radio" name="nem" id="ffi" value="férfi" onChange={ (e) => {
+            setUser({ ...user, nem: e.target.value })
+          } }/>
+          <label htmlFor="no">Nő</label>
+          <input type="radio" name="nem" id="no" value="nő" onChange={ (e) => {
+            setUser({ ...user, nem: e.target.value })
+          }} />
+          <br />
+
+          <label htmlFor="bio">Bemutatkozás</label> <br />
+          <textarea id="bio" value={ user.bio } onChange={ (e) => {
+            setUser({ ...user, bio: e.target.value })
+          } }/>
         </fieldset>
       </form>
       <p>Felhasználó</p>
       <ul>
         <li>Felhasználónév: { user.regNev }</li>
         <li>Település: { user.lakhely }</li>
+        <li>Nyelvtudás: { Object.values(user.nyelv).join(' ') }</li>
+        <li>Nem: { user.nem }</li>
+        <li>Bemutatkozás: { user.bio }</li>
       </ul>
     </>
   )
